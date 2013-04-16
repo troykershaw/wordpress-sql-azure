@@ -723,7 +723,7 @@ class SQL_Translations extends wpdb
             && (stripos($query,'UPDATE') !== 0  && stripos($query,'UPDATE') !== FALSE) ) {
             return $query;
         }
-        $pattern = '/LIMIT\s*(\d+)((\s*,?\s*)(\d+)*)(;{0,1})$/is';
+        $pattern = '/LIMIT\s*(\d+)((\s*,?\s*)(\d+)*)$/is';
         $matched = preg_match($pattern, $query, $limit_matches);
         if ( $matched == 0 ) {
             return $query;
@@ -735,9 +735,9 @@ class SQL_Translations extends wpdb
             return $query;
         }
         // Check for true offset
-        if ( count($limit_matches) == 5 && $limit_matches[1] != '0' ) {
+        if ( count($limit_matches) >= 5 && $limit_matches[1] != '0' ) {
             $true_offset = true;
-        } elseif ( count($limit_matches) == 5 && $limit_matches[1] == '0' ) {
+        } elseif ( count($limit_matches) >= 5 && $limit_matches[1] == '0' ) {
             $limit_matches[1] = $limit_matches[4];
         }
 
